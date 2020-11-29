@@ -1,12 +1,12 @@
 <?php
 
-namespace Spatie\Skeleton\Commands;
+namespace Seshac\Otp\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class OtpCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'otp-generator';
 
     public $description = 'My command';
 

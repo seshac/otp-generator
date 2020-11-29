@@ -1,16 +1,16 @@
 {
-    "name": ":vendor_name/:package_name",
-    "description": ":package_description",
+    "name": "seshac/otp-generator",
+    "description": "OTP Generator and Validator for Laravel Applications",
     "keywords": [
-        ":vendor_name",
-        ":package_name"
+        "seshac",
+        "otp-generator"
     ],
-    "homepage": "https://github.com/:vendor_name/:package_name",
+    "homepage": "https://github.com/seshac/otp-generator",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
+            "name": "sesha",
+            "email": "seshadriece008@gmail.com",
             "homepage": "https://spatie.be",
             "role": "Developer"
         }
@@ -26,13 +26,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\Skeleton\\": "src",
-            "Spatie\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Seshac\\Otp\\": "src",
+            "Seshac\\Otp\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\Skeleton\\Tests\\": "tests"
+            "Seshac\\Otp\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -46,10 +46,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Spatie\\Skeleton\\SkeletonServiceProvider"
+                "Seshac\\Otp\\OtpServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "Spatie\\Skeleton\\SkeletonFacade"
+                "Otp": "Seshac\\Otp\\OtpFacade"
             }
         }
     },

@@ -1,0 +1,21 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateOtpTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('otp-generator_table', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('identifier');
+            $table->string('token');
+            $table->integer('validity');
+            $table->boolean('expired')->default(false);
+            $table->integer('no_times_generated')->default(1);
+            $table->timestamps();
+        });
+    }
+}
