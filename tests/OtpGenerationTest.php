@@ -16,7 +16,6 @@ class OtpGenerationTest extends TestCase
         $identifier = Str::random(12);
         $otp = Otp::generate($identifier);
         $validator = Otp::validate($identifier, $otp->token);
-        dd($validator);
         $this->assertEquals($validator->status, true);
     }
 
