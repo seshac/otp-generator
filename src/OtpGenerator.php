@@ -24,7 +24,7 @@ class OtpGenerator
 
     /**
      * use same token to resending opt
-     * 
+     *
      *  @var [bool]
      */
     public $useSameToken;
@@ -45,7 +45,7 @@ class OtpGenerator
 
     /**
      * Maximum otps allowed to generate
-     * 
+     *
      *  @var [integer]
      */
     public $maximum_otps_allowed;
@@ -97,7 +97,7 @@ class OtpGenerator
     {
         $otp = OtpModel::where('identifier', $identifier)->first();
 
-        if (!$otp) {
+        if (! $otp) {
             return (object) [
                 'status' => false,
                 'message' => 'OTP does not exists, Please generate new OTP',
