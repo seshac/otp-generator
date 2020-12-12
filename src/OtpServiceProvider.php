@@ -29,6 +29,7 @@ class OtpServiceProvider extends ServiceProvider
 
     public function register()
     {
+        $this->app->alias(OtpGenerator::class, 'otp-generator');
         $this->mergeConfigFrom(__DIR__ . '/../config/otp-generator.php', 'otp-generator');
     }
 

@@ -8,13 +8,15 @@ class CreateOtpTable extends Migration
 {
     public function up()
     {
-        Schema::create('otp-generator_table', function (Blueprint $table) {
+        Schema::create('otps', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('identifier');
             $table->string('token');
             $table->integer('validity');
             $table->boolean('expired')->default(false);
-            $table->integer('no_times_generated')->default(1);
+            $table->integer('no_times_generated')->default(0);
+            $table->integer('no_times_attempted')->default(0);
+            $table->timestamp('generated_at');
             $table->timestamps();
         });
     }
