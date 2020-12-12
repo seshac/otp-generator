@@ -7,41 +7,46 @@ use Seshac\Otp\Models\Otp as OtpModel;
 
 class OtpGenerator
 {
+
     /**
      * Length of the generated OTP
      *
-     * @var [int]
+     * @var [integer]
      */
     public $length;
 
     /**
      * Generated OPT type
      *
-     * @var [type]
+     * @var [bool]
      */
     public $onlyDigits;
 
     /**
      * use same token to resending opt
+     * 
+     *  @var [bool]
      */
     public $useSameToken;
 
     /**
      * Otp Validity time
      *
-     * @var [int]
+     * @var [integer]
      */
     public $validity;
 
     /**
-    * Delete old otps
-    *
-    * @var [int]
-    */
+     * Delete old otps
+     *
+     * @var [integer]
+     */
     public $deleteOldOtps;
 
     /**
      * Maximum otps allowed to generate
+     * 
+     *  @var [integer]
      */
     public $maximum_otps_allowed;
 
@@ -56,14 +61,14 @@ class OtpGenerator
         $this->allowed_attempts = config('otp-generator.allowed_attempts');
     }
 
-    public function generate(string $identifier) :object
+    public function generate(string $identifier): object
     {
         $this->deleteOldOtps();
 
         $token = $this->createPin();
 
         $otp = OtpModel::updateOrCreate(
-            [ 'identifier' => $identifier ],
+            ['identifier' => $identifier],
             [
                 'token' => $token,
                 'validity' => $this->validity,
@@ -88,21 +93,21 @@ class OtpGenerator
         ];
     }
 
-    public function validate(string $identifier, string $token) : object
+    public function validate(string $identifier, string $token): object
     {
         $otp = OtpModel::where('identifier', $identifier)->first();
 
-        if (! $otp) {
+        if (!$otp) {
             return (object) [
                 'status' => false,
-                 'message' => 'OTP does not exists, Please generate new OTP',
+                'message' => 'OTP does not exists, Please generate new OTP',
             ];
         }
 
         if ($otp->isExpired()) {
             return (object) [
                 'status' => false,
-                 'message' => 'OTP is expired',
+                'message' => 'OTP is expired',
             ];
         }
 
@@ -125,7 +130,7 @@ class OtpGenerator
 
         return (object) [
             'status' => false,
-             'message' => 'OTP does not match',
+            'message' => 'OTP does not match',
         ];
     }
 
@@ -135,8 +140,8 @@ class OtpGenerator
             ->orWhere('created_at', '<', Carbon::now()->subMinutes($this->deleteOldOtps))
             ->delete();
     }
-    
-    private function createPin() :string
+
+    private function createPin(): string
     {
         if ($this->onlyDigits) {
             $characters = '0123456789';
