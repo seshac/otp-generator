@@ -1,9 +1,8 @@
 # OTP Generator and Validator for Laravel Applications
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/seshac/otp-generator.svg?style=flat-square)](https://packagist.org/packages/seshac/otp-generator)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/seshac/otp-generator/run-tests?label=tests)](https://github.com/seshac/otp-generator/actions?query=workflow%3Arun-tests+branch%3Amaster)
+![GitHub Tests Action Status](https://github.com/seshac/otp-generator/workflows/Tests/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/seshac/otp-generator.svg?style=flat-square)](https://packagist.org/packages/seshac/otp-generator)
-
 
 ## Installation
 
@@ -26,7 +25,6 @@ You can publish the config file with:
 php artisan vendor:publish --provider="Seshac\Otp\OtpServiceProvider" --tag="config"
 ```
 
-
 ## Usage
 
 ```php
@@ -42,7 +40,6 @@ $verify = Otp::validate($identifier, $otp->token);
   "message": "OTP is valid"
 }
 ```
-
 
 This is the contents of the published config file:
 
@@ -122,8 +119,6 @@ return [
 ];
 
 ```
-
-
 
 ## Testing
 
