@@ -33,7 +33,7 @@ class TestCase extends Orchestra
             'prefix' => '',
         ]);
 
-        include_once __DIR__.'/../database/migrations/create_otp_generator_table.php.stub';
-        (new \CreateOtpTable())->up();
+        include_once __DIR__.'/../database/migrations/create_otps_table.php.stub';
+        (new \CreateOtpsTable())->up();
     }
 }

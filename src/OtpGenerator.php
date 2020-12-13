@@ -11,45 +11,52 @@ class OtpGenerator
     /**
      * Length of the generated OTP
      *
-     * @var [integer]
+     * @var int
      */
     public $length;
 
     /**
      * Generated OPT type
      *
-     * @var [bool]
+     * @var bool
      */
     public $onlyDigits;
 
     /**
      * use same token to resending opt
      *
-     *  @var [bool]
+     *  @var bool
      */
     public $useSameToken;
 
     /**
      * Otp Validity time
      *
-     * @var [integer]
+     * @var int
      */
     public $validity;
 
     /**
      * Delete old otps
      *
-     * @var [integer]
+     * @var int
      */
     public $deleteOldOtps;
 
     /**
      * Maximum otps allowed to generate
      *
-     *  @var [integer]
+     *  @var int
      */
     public $maximum_otps_allowed;
 
+    /**
+     * Maximum number of times to allowed to validate
+     *
+     * @var int
+     */
+    public $allowed_attempts;
+    
     public function __construct()
     {
         $this->length = config('otp-generator.length');
