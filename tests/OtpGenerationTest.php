@@ -44,7 +44,7 @@ class OtpGenerationTest extends TestCase
     public function cant_able_to_generate_the_otp_more_than_the_maximum_specified_time()
     {
         $identifier = Str::random(12);
-        $limit = config('otp-generator.maximum_otps_allowed');
+        $limit = config('otp-generator.maximumOtpsAllowed');
       
         for ($i = 0; $i < $limit ; $i++) {
             Otp::generate($identifier);
@@ -69,15 +69,67 @@ class OtpGenerationTest extends TestCase
     }
 
     /** @test */
-    public function cant_able_to_verify_the_otp_once_reach_the_maximum_allowed_attempts()
+    public function cant_able_to_verify_the_otp_once_reach_the_maximum_allowedAttempts()
     {
         $identifier = Str::random(12);
         $otp = Otp::generate($identifier);
-        $allowed_attempts = config('otp-generator.allowed_attempts');
-        for ($i = 0; $i < $allowed_attempts ; $i++) {
+        $allowedAttempts = config('otp-generator.allowedAttempts');
+        for ($i = 0; $i < $allowedAttempts ; $i++) {
             Otp::validate($identifier, 'wrongToken');
         }
         $validator = Otp::validate($identifier, $otp->token);
         $this->assertEquals($validator->status, false);
+    }
+
+    /** @test */
+    public function can_able_set_custom_validity_time_and_maximum_otps_allowed_numbers()
+    {
+        $identifier = Str::random(12);
+        Otp::setValidity(30)
+            ->generate($identifier);
+
+        $this->assertDatabaseHas('otps', [
+                'validity' => 30,
+        ]);
+        $identifier = Str::random(11);
+        $maximumOtpsAllowed = 10;
+        for ($i = 0; $i < $maximumOtpsAllowed  ; $i++) {
+            $otp = Otp::setMaximumOtpsAllowed($maximumOtpsAllowed)
+                ->generate($identifier);
+            $this->assertEquals($otp->status, true);
+        }
+    }
+
+    /** @test */
+    public function can_able_set_custom_number_of_allowed_attempts()
+    {
+        $identifier = Str::random(12);
+        $otp = Otp::generate($identifier);
+        $allowedAttempts = 10;
+        for ($i = 0; $i < $allowedAttempts - 1 ; $i++) {
+            Otp::setAllowedAttempts($allowedAttempts)
+                ->validate($identifier, 'wrongToken');
+        }
+        $validator = Otp::validate($identifier, $otp->token);
+        $this->assertEquals($validator->status, true);
+    }
+
+    /** @test */
+    public function can_able_to_set_custom_otp_length()
+    {
+        $identifier = Str::random(12);
+        $otp = Otp::setLength(8)
+                ->generate($identifier);
+        $this->assertEquals(strlen($otp->token), 8);
+    }
+
+    /** @test */
+    public function can_able_get_same_token_on_second_time_onwards()
+    {
+        $identifier = Str::random(12);
+        $otp1 = Otp::generate($identifier);
+        $otp2 = Otp::setUseSameToken(true)->generate($identifier);
+
+        $this->assertEquals($otp1->token, $otp2->token);
     }
 }

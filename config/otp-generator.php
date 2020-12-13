@@ -29,7 +29,7 @@ return [
     | This filed will be used when validating the generated OTP token.
     |
     */
-    'allowed_attempts' => env('OTP_ALLOWED_ATTEMPTS', 5),
+    'allowedAttempts' => env('OTP_ALLOWED_ATTEMPTS', 5),
 
 
     /*
@@ -69,5 +69,5 @@ return [
     | Once the limit reached, the end-user can't able to generate OPT until the OTP deleteOldOtps time is over.
     |
     */
-    'maximum_otps_allowed' => env('MAXIMUM_OTPS_ALLOWED', 5),
+    'maximumOtpsAllowed' => env('MAXIMUM_OTPS_ALLOWED', 5),
 ];

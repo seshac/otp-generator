@@ -3,6 +3,7 @@
 namespace Seshac\Otp;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Seshac\Otp\Models\Otp as OtpModel;
 
 class OtpGenerator
@@ -13,49 +14,49 @@ class OtpGenerator
      *
      * @var int
      */
-    public $length;
+    protected $length;
 
     /**
      * Generated OPT type
      *
      * @var bool
      */
-    public $onlyDigits;
+    protected $onlyDigits;
 
     /**
      * use same token to resending opt
      *
      *  @var bool
      */
-    public $useSameToken;
+    protected $useSameToken;
 
     /**
      * Otp Validity time
      *
      * @var int
      */
-    public $validity;
+    protected $validity;
 
     /**
      * Delete old otps
      *
      * @var int
      */
-    public $deleteOldOtps;
+    protected $deleteOldOtps;
 
     /**
      * Maximum otps allowed to generate
      *
      *  @var int
      */
-    public $maximum_otps_allowed;
+    protected $maximumOtpsAllowed;
 
     /**
      * Maximum number of times to allowed to validate
      *
      * @var int
      */
-    public $allowed_attempts;
+    protected $allowedAttempts;
     
     public function __construct()
     {
@@ -64,26 +65,61 @@ class OtpGenerator
         $this->useSameToken = config('otp-generator.useSameToken');
         $this->validity = config('otp-generator.validity');
         $this->deleteOldOtps = config('otp-generator.deleteOldOtps');
-        $this->maximum_otps_allowed = config('otp-generator.maximum_otps_allowed');
-        $this->allowed_attempts = config('otp-generator.allowed_attempts');
+        $this->maximumOtpsAllowed = config('otp-generator.maximumOtpsAllowed');
+        $this->allowedAttempts = config('otp-generator.allowedAttempts');
+    }
+
+    /**
+     * When a method is called, look for the 'set' prefix and attempt to set the
+     * matching property to the value passed to the method and return a chainable
+     * object to the caller.
+     *
+     * @param string $method
+     * @param mixed $params
+     * @return mixed
+     */
+    public function __call(string $method, $params)
+    {
+        if (substr($method, 0, 3) != 'set') {
+            return;
+        }
+
+        $property = Str::camel(substr($method, 3));
+
+
+        // Does the property exist on this object?
+        if (! property_exists($this, $property)) {
+            return;
+        }
+
+        $this->{$property} = $params[0] ?? null;
+
+        return $this;
     }
 
     public function generate(string $identifier): object
     {
         $this->deleteOldOtps();
 
-        $token = $this->createPin();
+        $otp = OtpModel::where('identifier', $identifier)->first();
 
-        $otp = OtpModel::updateOrCreate(
-            ['identifier' => $identifier],
-            [
-                'token' => $token,
+        if ($otp == null) {
+            $otp = OtpModel::create([
+                'identifier' => $identifier,
+                'token' => $this->createPin(),
                 'validity' => $this->validity,
                 'generated_at' => Carbon::now(),
-            ]
-        );
+            ]);
+        } else {
+            $otp->update([
+                'identifier' => $identifier,
+                'token' => $this->useSameToken ?  $otp->token :  $this->createPin(),
+                'validity' => $this->validity,
+                'generated_at' => Carbon::now(),
+            ]);
+        }
 
-        if ($otp->no_times_generated == $this->maximum_otps_allowed) {
+        if ($otp->no_times_generated == $this->maximumOtpsAllowed) {
             return (object) [
                 'status' => false,
                 'message' => "Reached the maximum times to generate OTP",
@@ -118,7 +154,7 @@ class OtpGenerator
             ];
         }
 
-        if ($otp->no_times_attempted == $this->allowed_attempts) {
+        if ($otp->no_times_attempted == $this->allowedAttempts) {
             return (object) [
                 'status' => false,
                 'message' => "Reached the maximum allowed attempts",

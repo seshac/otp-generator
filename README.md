@@ -41,82 +41,23 @@ $verify = Otp::validate($identifier, $otp->token);
 }
 ```
 
-This is the contents of the published config file:
+You have control to update the setting at otp-generator.php config file but you control while generating also
+
+## Advance Usage
 
 ```php
-<?php
-
-return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Generated OPT Validity time by minutes
-    |--------------------------------------------------------------------------
-    |
-    | By default = 10 minutes
-    |
-    */
-    'validity' => env('OTP_VALIDITY_TIME', 10),
-    /*
-    |--------------------------------------------------------------------------
-    |  Length of the generated OTP
-    |--------------------------------------------------------------------------
-    |
-    | By default = 6 digits used
-    |
-    */
-    'length' => env('OPT_LENGTH', 6),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Allowed attempts within duration of attempts_count_time
-    |--------------------------------------------------------------------------
-    |
-    | This filed will be used when validating the generated OTP token.
-    |
-    */
-    'allowed_attempts' => env('OTP_ALLOWED_ATTEMPTS', 5),
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Generated OPT Type
-    |-------------------------------------------------------------------------
-    |
-    | if true the geneated OTP contains only digits. ex : 654321
-    | f false the geneated OTP contains only alpanumeric. ex : 21ab43
-    */
-    'onlyDigits' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Use same token to resend the OTP
-    |-------------------------------------------------------------------------
-    |
-    | if true the the second time onwards geneated OTPs same a the first one (Only OTP validation time)
-    | if false each time unique OPT will be generated
-    */
-    'useSameToken' => false,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Delete old otps older than specified minutes
-    |-------------------------------------------------------------------------
-    |
-    | Default 30 minutes.
-    */
-    'deleteOldOtps' => 30,
-
-    /*
-    |--------------------------------------------------------------------------
-    |  maximum OTPs allowed being generated during the deleteOldOtps time.
-    |--------------------------------------------------------------------------
-    |
-    | Once the limit reached, the end-user can't able to generate OPT until the OTP deleteOldOtps time is over.
-    |
-    */
-    'maximum_otps_allowed' => env('MAXIMUM_OTPS_ALLOWED', 5),
-];
+use Seshac\Otp\Otp;
+.
+.
+$otp =  Otp::setValidity(30)  // otp validity time in mins
+      ->setLength(4)  // Lenght of the generated otp
+      ->setMaximumOtpsAllowed(10) // Number of times allowed to regenerate otps
+      ->setOnlyDigits(false)  // generated otp contains mixed characters ex:ad2312
+      ->setUseSameToken(true) // if you re-generate OTP, you will get same token
+      ->generate($identifier);
+.
+$verify = Otp::setMaximumOtpsAllowed(10) // number of times they can allow to attempt with wrong token
+    ->validate($identifier, $otp->token);
 
 ```
 
