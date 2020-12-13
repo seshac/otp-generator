@@ -26,6 +26,24 @@ You can publish the config file with:
 php artisan vendor:publish --provider="Seshac\Otp\OtpServiceProvider" --tag="config"
 ```
 
+
+## Usage
+
+```php
+use Seshac\Otp\Otp;
+.
+.
+$otp =  Otp::generate($identifier);
+.
+$verify = Otp::validate($identifier, $otp->token);
+// response
+{
+  "status": true
+  "message": "OTP is valid"
+}
+```
+
+
 This is the contents of the published config file:
 
 ```php
@@ -105,21 +123,7 @@ return [
 
 ```
 
-## Usage
 
-```php
-use Seshac\Otp\Otp;
-.
-.
-$otp =  Otp::generate($identifier);
-.
-$verify = Otp::validate($identifier, $otp->token);
-// response
-{
-  "status": true
-  "message": "OTP is valid"
-}
-```
 
 ## Testing
 
