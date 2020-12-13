@@ -3,7 +3,8 @@
     "description": "OTP Generator and Validator for Laravel Applications",
     "keywords": [
         "seshac",
-        "otp-generator"
+        "otp-generator",
+        "Laravel"
     ],
     "homepage": "https://github.com/seshac/otp-generator",
     "license": "MIT",
