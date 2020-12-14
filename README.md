@@ -55,7 +55,7 @@ $otp =  Otp::setValidity(30)  // otp validity time in mins
       ->setUseSameToken(true) // if you re-generate OTP, you will get same token
       ->generate($identifier);
 .
-$verify = Otp::setMaximumOtpsAllowed(10) // number of times they can allow to attempt with wrong token
+$verify = Otp::setAllowedAttempts(10) // number of times they can allow to attempt with wrong token
     ->validate($identifier, $otp->token);
 
 ```
