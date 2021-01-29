@@ -176,7 +176,8 @@ class OtpGenerator
         ];
     }
 
-    public function expiredAt(string $identifier): object {
+    public function expiredAt(string $identifier): object
+    {
         $otp = OtpModel::where('identifier', $identifier)->first();
        
         if (! $otp) {
@@ -188,7 +189,7 @@ class OtpGenerator
        
         return (object) [
             'status' => true,
-            'expired_at' =>  $otp->expiredAt()
+            'expired_at' => $otp->expiredAt(),
         ];
     }
 
