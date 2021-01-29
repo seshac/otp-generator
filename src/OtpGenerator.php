@@ -161,6 +161,7 @@ class OtpGenerator
             ];
         }
 
+        $otp->increment('no_times_attempted');
 
         if ($otp->token == $token) {
             return (object) [
@@ -169,11 +170,25 @@ class OtpGenerator
             ];
         }
 
-        $otp->increment('no_times_attempted');
-
         return (object) [
             'status' => false,
             'message' => 'OTP does not match',
+        ];
+    }
+
+    public function expiredAt(string $identifier): object {
+        $otp = OtpModel::where('identifier', $identifier)->first();
+       
+        if (! $otp) {
+            return (object) [
+                'status' => false,
+                'message' => 'OTP does not exists, Please generate new OTP',
+            ];
+        }
+       
+        return (object) [
+            'status' => true,
+            'expired_at' =>  $otp->expiredAt()
         ];
     }
 
@@ -189,7 +204,7 @@ class OtpGenerator
         if ($this->onlyDigits) {
             $characters = '0123456789';
         } else {
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $characters = '123456789abcdefghABCDEFGH';
         }
         $length = strlen($characters);
         $pin = '';

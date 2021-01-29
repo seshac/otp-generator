@@ -33,11 +33,24 @@ use Seshac\Otp\Otp;
 $otp =  Otp::generate($identifier);
 .
 $verify = Otp::validate($identifier, $otp->token);
-// response
+// example response
 {
   "status": true
   "message": "OTP is valid"
 }
+
+// to get expiredAt time
+  $expires = Otp::expiredAt($identifier);
+
+  // example response 
+  {
+    +"status": true
+    +"expired_at": Illuminate\Support\Carbon @1611895244^ {
+      ....
+      #dumpLocale: null
+      date: 2021-01-29 04:40:44.0 UTC (+00:00)
+  }
+
 ```
 
 You have control to update the setting at otp-generator.php config file but you control while generating also
