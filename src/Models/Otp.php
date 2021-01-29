@@ -36,4 +36,9 @@ class Otp extends Model
 
         return true;
     }
+
+    public function expiredAt() :object
+    {
+        return $this->generated_at->addMinutes($this->validity);
+    }
 }

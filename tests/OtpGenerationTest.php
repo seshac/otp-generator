@@ -132,4 +132,13 @@ class OtpGenerationTest extends TestCase
 
         $this->assertEquals($otp1->token, $otp2->token);
     }
+
+    /** @test */
+    public function can_able_to_get_expired_at_time()
+    {
+        $identifier = Str::random(12);
+        Otp::generate($identifier);
+        $expires = Otp::expiredAt($identifier);
+        $this->assertEquals(9, $expires->expired_at->diffInMinutes());
+    }
 }
