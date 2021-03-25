@@ -8,21 +8,19 @@
     ],
     "homepage": "https://github.com/seshac/otp-generator",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "sesha",
-            "email": "seshadriece008@gmail.com",
-            "homepage": "https://spatie.be",
-            "role": "Developer"
-        }
-    ],
+    "authors": [{
+        "name": "sesha",
+        "email": "seshadriece008@gmail.com",
+        "homepage": "https://spatie.be",
+        "role": "Developer"
+    }],
     "require": {
-        "php": "^7.3|7.4|^8.0"
+        "php": "^7.1|7.2|7.3|7.4|^8.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^6.0",
-        "phpunit/phpunit": "^9.3",
-        "vimeo/psalm": "^3.11|^4.3"
+        "orchestra/testbench": "*",
+        "phpunit/phpunit": "*",
+        "vimeo/psalm": "*"
     },
     "autoload": {
         "psr-4": {
