@@ -18,9 +18,9 @@
         "php": "^7.1|7.2|7.3|7.4|^8.0"
     },
     "require-dev": {
-        "orchestra/testbench": "*",
-        "phpunit/phpunit": "*",
-        "vimeo/psalm": "*"
+        "orchestra/testbench": "^3.7",
+        "phpunit/phpunit": "^8.1",
+        "vimeo/psalm": "^2.1"
     },
     "autoload": {
         "psr-4": {
