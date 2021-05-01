@@ -88,7 +88,7 @@ class OtpGenerator
 
 
         // Does the property exist on this object?
-        if (!property_exists($this, $property)) {
+        if (! property_exists($this, $property)) {
             return;
         }
 
@@ -111,7 +111,6 @@ class OtpGenerator
                 'generated_at' => Carbon::now(),
             ]);
         } else {
-
             if ($otp->no_times_generated == $this->maximumOtpsAllowed) {
                 return (object) [
                     'status' => false,
@@ -142,7 +141,7 @@ class OtpGenerator
     {
         $otp = OtpModel::where('identifier', $identifier)->first();
 
-        if (!$otp) {
+        if (! $otp) {
             return (object) [
                 'status' => false,
                 'message' => 'OTP does not exists, Please generate new OTP',
@@ -182,7 +181,7 @@ class OtpGenerator
     {
         $otp = OtpModel::where('identifier', $identifier)->first();
 
-        if (!$otp) {
+        if (! $otp) {
             return (object) [
                 'status' => false,
                 'message' => 'OTP does not exists, Please generate new OTP',
