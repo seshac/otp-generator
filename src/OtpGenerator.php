@@ -57,7 +57,7 @@ class OtpGenerator
      * @var int
      */
     protected $allowedAttempts;
-    
+
     public function __construct()
     {
         $this->length = config('otp-generator.length');
@@ -111,6 +111,14 @@ class OtpGenerator
                 'generated_at' => Carbon::now(),
             ]);
         } else {
+
+            if ($otp->no_times_generated == $this->maximumOtpsAllowed) {
+                return (object) [
+                    'status' => false,
+                    'message' => "Reached the maximum times to generate OTP",
+                ];
+            }
+
             $otp->update([
                 'identifier' => $identifier,
                 'token' => $this->useSameToken ?  $otp->token :  $this->createPin(),
@@ -119,12 +127,6 @@ class OtpGenerator
             ]);
         }
 
-        if ($otp->no_times_generated == $this->maximumOtpsAllowed) {
-            return (object) [
-                'status' => false,
-                'message' => "Reached the maximum times to generate OTP",
-            ];
-        }
 
         $otp->increment('no_times_generated');
 
@@ -179,14 +181,14 @@ class OtpGenerator
     public function expiredAt(string $identifier): object
     {
         $otp = OtpModel::where('identifier', $identifier)->first();
-       
+
         if (! $otp) {
             return (object) [
                 'status' => false,
                 'message' => 'OTP does not exists, Please generate new OTP',
             ];
         }
-       
+
         return (object) [
             'status' => true,
             'expired_at' => $otp->expiredAt(),
