@@ -45,7 +45,7 @@ class OtpGenerationTest extends TestCase
     {
         $identifier = Str::random(12);
         $limit = config('otp-generator.maximumOtpsAllowed');
-      
+
         for ($i = 0; $i < $limit ; $i++) {
             Otp::generate($identifier);
         }
