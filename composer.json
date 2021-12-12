@@ -8,14 +8,12 @@
     ],
     "homepage": "https://github.com/seshac/otp-generator",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "sesha",
-            "email": "seshadriece008@gmail.com",
-            "homepage": "https://spatie.be",
-            "role": "Developer"
-        }
-    ],
+    "authors": [{
+        "name": "sesha",
+        "email": "seshadriece008@gmail.com",
+        "homepage": "https://spatie.be",
+        "role": "Developer"
+    }],
     "require": {
         "php": "^7.3|7.4|^8.0"
     },
