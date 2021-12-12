@@ -8,7 +8,6 @@ use Seshac\Otp\Models\Otp as OtpModel;
 
 class OtpGenerator
 {
-
     /**
      * Length of the generated OTP
      *
@@ -120,7 +119,7 @@ class OtpGenerator
 
             $otp->update([
                 'identifier' => $identifier,
-                'token' => $this->useSameToken ?  $otp->token :  $this->createPin(),
+                'token' => $this->useSameToken ? $otp->token : $this->createPin(),
                 'validity' => $this->validity,
                 'generated_at' => Carbon::now(),
             ]);

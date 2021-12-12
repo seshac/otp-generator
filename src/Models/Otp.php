@@ -1,4 +1,5 @@
 <?php
+
 namespace Seshac\Otp\Models;
 
 use Carbon\Carbon;
@@ -6,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Otp extends Model
 {
-
      /**
      * The attributes that are mass assignable.
      *
@@ -20,14 +20,14 @@ class Otp extends Model
         'generated_at' => 'datetime',
     ];
 
-    public function isExpired() :bool
+    public function isExpired(): bool
     {
         if ($this->expired) {
             return true;
         }
 
         $generatedTime = $this->generated_at->addMinutes($this->validity);
-       
+
         if (strtotime($generatedTime) >= strtotime(Carbon::now()->toDateTimeString())) {
             return false;
         }
@@ -37,7 +37,7 @@ class Otp extends Model
         return true;
     }
 
-    public function expiredAt() :object
+    public function expiredAt(): object
     {
         return $this->generated_at->addMinutes($this->validity);
     }
