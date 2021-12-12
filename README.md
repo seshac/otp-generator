@@ -1,7 +1,9 @@
 # OTP Generator and Validator for Laravel Applications
 
+
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/seshac/otp-generator.svg?style=flat-square)](https://packagist.org/packages/seshac/otp-generator)
 ![GitHub Tests Action Status](https://github.com/seshac/otp-generator/workflows/Tests/badge.svg)
+[![Total Downloads](https://img.shields.io/packagist/dt/seshac/otp-generator.svg??style=flat-square)](https://packagist.org/packages/seshac/laravel-shiprocket-api)
 
 ## Installation
 
