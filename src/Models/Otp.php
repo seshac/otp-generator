@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Otp extends Model
 {
-     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    /**
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
     protected $fillable = [
         'identifier', 'token', 'validity','expired','no_times_generated','generated_at',
     ];
