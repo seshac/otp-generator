@@ -32,6 +32,7 @@ php artisan vendor:publish --provider="Seshac\Otp\OtpServiceProvider" --tag="con
 use Seshac\Otp\Otp;
 .
 .
+// May be you can use phone number as $identifier
 $otp =  Otp::generate($identifier);
 .
 $verify = Otp::validate($identifier, $otp->token);
